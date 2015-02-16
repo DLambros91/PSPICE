@@ -1,0 +1,25 @@
+* Name: Demetrios Lambropoulos
+* Date: Monday, February 16, 2015
+
+* Voltage Source
+*	N+ N- 		V1   V2   Td   Tr      Tf    Tw    Per
+Vs  1  0  PULSE(0V   10V  0s  0.5ps   0.5ps 900ms  2s)
+
+* Resistors
+*Name  Node Node Value
+R1 		1    2     1K
+
+* Diode
+.MODEL  DN914  D  (IS=4.77E-10 N=1.59 BV=133.3 IBV=1.0E-07 
++ RS=6.01E-01 CJO=4.0E-12 VJ=.75 M=.333 TT=5.76E-09)
+
+*Name	N+	N-	Type 
+D1		2   0   DN914 
+
+.TRAN 5ms 3s 0s 5ms UIC
+
+* Call graphic post-processor
+.PROBE
+
+*End the file
+.END
