@@ -1,9 +1,9 @@
 * Name: Demetrios Lambropoulos
 * Date: Monday, February 16, 2015
 
-* Voltage Source
-*	N+ N- 		V1   V2   Td   Tr      Tf    Tw    Per
-Vs  1  0  PULSE(0V   10V  0s  0.5ps   0.5ps 900ms  2s)
+* Voltage Source 
+*	N+ N- 		V1   V2   Td   Tr   Tf    Tw     Per
+Vs  1  0  PULSE(-10V  10V  0     0  	0   5E-4    1E-3)
 
 * Resistors
 *Name  Node Node Value
@@ -13,13 +13,24 @@ R1 		1    2     1K
 .MODEL  DN914  D  (IS=4.77E-10 N=1.59 BV=133.3 IBV=1.0E-07 
 + RS=6.01E-01 CJO=4.0E-12 VJ=.75 M=.333 TT=5.76E-09)
 
-*Name	N+	N-	Type 
-D1		2   0   DN914 
+.MODEL 1N914 D  ( IS=6.2229E-9 N=1.9224 RS=.33636 IKF=42.843E-3
++ CJO=764.38E-15 M=.1001 VJ=9.9900 ISR=11.526E-9 NR=4.9950 BV=100.14 IBV=.25951 TT=2.8854E-9 )
 
-.TRAN 5ms 3s 0s 5ms UIC
+.MODEL DI_6A05 D  ( IS=52.4n RS=7.00m BV=50.0 IBV=10.0u
++ CJO=60.0p  M=0.333 N=1.70 TT=2.88u ) 
+
+.MODEL  DN4001  D  (IS=5.86E-06 N=1.7 BV=6.66E+1 IBV=5.0E-07
++ RS=3.62E-02 CJO=5.21E-11 VJ=.34 M=.38 TT=5.04E-06)
+
+*Name	N+	N-	Type 
+D1		2   0  DI_6A05
 
 * Call graphic post-processor
 .PROBE
+
+.TRAN 1E-11999 1E-3
+.PRINT TRAN V(1) V(2)
+
 
 *End the file
 .END
