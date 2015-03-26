@@ -1,0 +1,36 @@
+*		Model for 2N3904 NPN BJT (from Eval library in Pspice)
+.model Q2N3904	NPN(Is=6.734f Xti=3 Eg=1.11 Vaf=74.03 Bf=416.4 Ne=1.259
++		Ise=6.734f Ikf=66.78m Xtb=1.5 Br=.7371 Nc=2 Isc=0 Ikr=0 Rc=1
++		Cjc=3.638p Mjc=.3085 Vjc=.75 Fc=.5 Cje=4.493p Mje=.2593 Vje=.75
++		Tr=239.5n Tf=301.2p Itf=.4 Vtf=4 Xtf=2 Rb=10) 
+
+*command	collector	base	emitter		model
+Q1A				4		 1         3		Q2N3904
+Q1B				4		 2		   3 		Q2N3904
+Q2			    6  		 5 		   3 		Q2N3904
+Q3				0		 6		   7		Q2N3904
+Q4			    0		 4 		   8 		Q2N3904
+
+* Resistors
+*		+node	-node	Resistance
+R1		  0		  4			270
+R2		  0       6         300
+R3        3       9         1.2K
+R4		  7       9         2K
+R5		  8       9         2K
+
+
+* Voltages Sources
+*		+node	-node	model	value 
+ViA		  1		  0		  DC      -1.6V
+ViB		  2		  0		  DC	  0V
+VREF	  5		  0		  DC	  -1.2V
+VEE		  9		  0		  DC	  -5V
+
+.DC ViB -1.8 -0.8 0.1
+
+.PRINT DC V(2) V(7)
+
+.PROBE
+
+.END
